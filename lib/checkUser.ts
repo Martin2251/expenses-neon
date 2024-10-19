@@ -19,4 +19,17 @@ export const checkUser = async () =>{
     if(loggedInUser){
         return loggedInUser
     }
+
+    // if not in db create new user 
+
+    const newUser = await db.user.create({
+        data:{
+            clerkUserId: user.id,
+            name:`${user.firstName} ${user.lastName}`,
+            imageUrl: user.imageUrl,
+            email: user.emailAddresses[0].emailAddress
+        }
+    })
+
+    return newUser
 }
