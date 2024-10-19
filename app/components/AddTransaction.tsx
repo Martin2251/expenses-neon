@@ -16,9 +16,10 @@ const AddTransaction = () => {
     </div>
     <div className='form-control'>
         <label htmlFor='amount'>Amount <br /> (negative - expense, postive - income)</label>
-        <input type='number' id='amount' name='amount' placeholder='enter amount...'  />
+        <input type='number' id='amount' name='amount' placeholder='enter amount...' step="0.01" />
 
     </div>
+    <button className='btn'>Add Transaction</button>
 
   </form>
   </>
