@@ -14,7 +14,7 @@ const AddTransaction = () => {
             console.log(data)
             }
         }
-    }
+    
   return (
   <>
   <h3>Add Transaction</h3>
