@@ -45,10 +45,11 @@ async function addTransaction (formData:FormData): Promise <TransactionResult>{
                     }
             })
             
-        
+            revalidatePath('/')
             return{data: transactionData}
             
         } catch (error) {
+            return {error:"Transaction not added"}
             
         }
  
