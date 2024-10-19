@@ -30,6 +30,10 @@ async function addTransaction (formData:FormData): Promise <TransactionResult>{
     // get logged in user 
     const {userId} = auth();
 
+    if(!userId){
+        return{error:"user not found"}
+    }
+
 
     const transactionData: TransactionData = {
         text,
