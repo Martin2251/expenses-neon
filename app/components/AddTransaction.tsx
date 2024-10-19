@@ -1,6 +1,7 @@
 "use client"
 import React from 'react'
 import addTransaction from '../actions/addTransaction'
+import {toast} from "react-toastify"
 
 const AddTransaction = () => {
 
@@ -8,7 +9,7 @@ const AddTransaction = () => {
         const {data,error} = await addTransaction(formData);
 
         if(error){
-            alert(error)
+            toast.error(error)
         }else{
             alert('Transaction Added')
             console.log(data)
