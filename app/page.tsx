@@ -1,6 +1,7 @@
 import React from 'react'
 import Guest from './components/Guest'
 import {currentUser} from "@clerk/nextjs/server"
+import AddTransaction from './components/AddTransaction'
 
 
 
@@ -13,6 +14,7 @@ const HomePage = async () => {
   return (
    <main>
     <h1>Welcome, {user.firstName}</h1>
+    <AddTransaction  />
    </main>
   )
 }
