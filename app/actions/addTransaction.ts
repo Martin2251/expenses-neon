@@ -29,7 +29,7 @@ async function addTransaction (formData:FormData): Promise <TransactionResult>{
 
     // get logged in user 
     const {userId} = auth();
-    console.log(userId)
+
 
     const transactionData: TransactionData = {
         text,
