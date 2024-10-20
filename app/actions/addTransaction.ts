@@ -1,58 +1,26 @@
-'use server'
-import { auth } from "@clerk/nextjs/server";
-import { db } from "@/lib/db";
-import { revalidatePath } from "next/cache";
+"use server"
+import { db } from "@/lib/db"
+import { auth } from "@clerk/nextjs/server"
+import { Trykker } from "next/font/google";
 
-interface TransactionData {
-    text:string;
-    amount:number;
-
-}
-
-interface TransactionResult{
-    data?:TransactionData
-    error?:string
-    
-}
-
-async function addTransaction (formData:FormData): Promise <TransactionResult>{
-    const textValue = formData.get('text')
-    const amountValue = formData.get('amount')
-
-    //Check for input values
-
-    if(!textValue || textValue === '' || !amountValue){
-        return {error: 'Please enter both text and amount'}
-    }
-
-    const text:string = textValue.toString();
-    const amount:number = parseFloat(amountValue.toString());
-    // parse amount as number
-
-    // get logged in user 
+async function getUserBalance(): Promise<{
+    balance?: number,
+    error?:string,
+}>{
     const {userId} = auth();
-    // check for user
     if(!userId){
-        return{error:"user not found"}
+        return {error:"user not found"}
     }
 
-        try {
-            const transactionData: TransactionData = await db.transaction.create({
-                data: {
-                    text,
-                    amount,
-                    userId
-                    }
-            })
-            
-            revalidatePath('/')
-            return{data: transactionData}
-            
-        } catch (error) {
-            return {error:"Transaction not added"}
-            
-        }
- 
+    try {
+        const transactions = await db.transaction.findMany({
+            where:{userId}
+        })
+        const balance = transactions.reduce((sum,transaction) =>sum + transaction.amount,0)
+        return {balance}
+    } catch (error) {
+        return {error:"database error"}
+    }
 }
 
-export default addTransaction
+export default getUserBalance
