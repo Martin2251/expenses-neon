@@ -9,6 +9,7 @@ const IncomeExpense = () => {
         </div>
         <div>
             <h4>Expenses</h4>
+            <p className='money minus'>$-110</p>
         </div>
       
     </div>
